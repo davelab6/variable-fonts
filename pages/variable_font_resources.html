@@ -6,11 +6,11 @@ permalink: /variable-font-resources/
 
 
 ---
-<header class="mdc-top-app-bar--fixed-adjust js-top-app-bar--blur">
+<header class="mdc-top-app-bar--fixed-adjust js-top-app-bar--blur content-section">
   <h1>{{ page.title }}</h1>
+  <p>The literature on variable fonts has exploded since they were first announced in 2016. The best way to grok variable fonts is to jump in and start playing with them. Once you feel comfortable, you might want to branch out and explore a little. Here’s a list of selected resources to help you get started.</p>
 </header>
 <section class="content-section">
-  <p>The literature on variable fonts has exploded since they were first announced in 2016. The best way to grok variable fonts is to jump in and start playing with them. Once you feel comfortable, you might want to branch out and explore a little. Here’s a list of selected resources to help you get started.</p>
 {% assign resourcesGrouped = site.resources | group_by: 'category' | sort: 'name' | reverse %}  
 
 {% for resources in resourcesGrouped %}
@@ -19,15 +19,18 @@ permalink: /variable-font-resources/
   {% assign resourcesSorted = resources.items | sort: 'title' %}  
   {% for resource in resourcesSorted %}
     {% assign body = resource.content | markdownify | strip_html %}
-    {% include beatrice/02-molecules/03-card/card.html 
-      card_style = 'outline'
-      primary_link_url = resource.link
-      heading_level = 3
-      label = resource.type
-      title = resource.title
-      subtitle = resource.author
-      body = body
-    %}
+
+    <div class="card-grid-cell">
+      {% include beatrice/02-molecules/03-card/card.html 
+        primary_link_url = resource.link
+        icon=iconKey
+        heading_level = 3
+        label = resource.type
+        title = resource.title
+        subtitle = resource.author
+        body = body
+      %}
+    </div>
   {% endfor %}
   </div>
 {% endfor %}

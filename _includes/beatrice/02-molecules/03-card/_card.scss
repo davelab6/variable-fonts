@@ -2,9 +2,9 @@
 
 .mdc-card {
   --mdc-theme-surface: var(--color-background);
-  box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2),
-              0px 3px 4px rgba(0, 0, 0, 0.12),
-              0px 3px 3px rgba(0, 0, 0, 0.14);
+
+  
+
   &__primary-action {
     height: 100%;
     &::before,
@@ -42,29 +42,54 @@
 }
 
 
+a.vf-mdc-card {
+  text-decoration: none;
+}
+
 .vf-mdc-card {
+  width: 100%;
+  border-radius: 2px;
   overflow: hidden;
-  &__title {
-    margin: 1rem;
-    label + & {
-      margin-top: 0.25rem;
-    }
+  border-color: transparent;
+  display: block;
+  box-shadow: 0 0 0 rgba(0, 0, 0, 0);
+  transition: box-shadow 0.2s ease-in-out !important;
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0px 1px 8px rgba(0, 0, 0, 0.2),
+                0px 3px 4px rgba(0, 0, 0, 0.12),
+                0px 3px 3px rgba(0, 0, 0, 0.14);
   }
-  &__body {
-    margin-bottom: 1rem;
-    margin-left: 1rem;
-    margin-right: 1rem;
+
+  // These need to be nested for specificity
+  .vf-mdc-card__title {
+    margin-top: calc( var(--body-text-spacer) * 1 );
+    margin-bottom: calc( var(--body-text-spacer) * 0.2 );
   }
-  &__label {
-    color: $color-gray-750;
-    padding: 1rem 1rem 0;
-    font-family: $sans-serif-novf;
-    font-size: 0.75rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    @supports (font-variation-settings: normal) {
-      font-family: $sans-serif;
-      font-stretch: 80%;
-    }
+
+  .vf-mdc-card__subtitle {
+    margin-top: 0;
+  }
+
+  .mdc-card__action--icon {
+    margin-top: 0.25rem;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 100%;
+    width: 48px;
+    height: 48px;
+  }
+}
+
+.vf-mdc-card__description {
+  margin-top: calc( var(--body-text-spacer) * 1 );
+}
+
+.vf-mdc-card__body {
+  padding: calc( var(--body-text-spacer) * 1 );
+  padding-bottom: calc( var(--body-text-spacer) * 1.2 );
+  .mdc-card__action--icon {
+    background: $color-gray-100;
+    border-radius: 100%;
   }
 }
