@@ -1,10 +1,6 @@
 // Colors
 // =============================================================================
 
-
-$color-offwhite: #fafafc;
-
-$color-coral: #ff5252;
 $color-blue: #0662ed;
 
 // Google colors
@@ -49,15 +45,15 @@ $color-silver: #E5E5E5;
 
 $color-heading: $color-gray-900;
 $color-text: $color-gray-800;
-$color-text-highlight: $color-gray-100;
+$color-text-highlight: rgba($color-gray-300, 0.75);
 $color-text-highlight-secondary: $color-gray-50;
 $color-card-border: $color-gray-200;
 $color-callout-highlight: $color-blue-50;
 $color-callout-highlight-secondary: lighten($color-blue-50, 2.5%);
 $color-text-link: $color-gray-900;
 $color-text-link-visited: $color-gray-900;
-$color-text-link-hover: $color-coral;
-$color-text-link-focus: $color-coral;
-$color-text-link-active: $color-coral;
+$color-text-link-hover: $color-gray-800;
+$color-text-link-focus: $color-gray-800;
+$color-text-link-active: $color-gray-800;
 $color-text-link-active-trail: $color-gray-900;
 $color-slider-group-background: #F4EFF6;
