@@ -1,0 +1,81 @@
+---
+layout: beatrice_page
+title: "About this site" 
+description: "Exploring how this site and its use of variable fonts impoves accessibility, design, and UX"
+permalink: /about-this-site/
+---
+<div class="color light-blue padded-bottom designing-with-vf-header">
+<h1>{{ page.title }}</h1>
+<section class="content-section">
+  <h2>Showing by example</h2>
+  <p >This site was designed not only to teach about variable fonts, but also to showcase their utility as much as possible. The typography has been designed around <a href="https://github.com/TypeNetwork/Roboto-Extremo">Roboto Extremo</a>, a newly reimagined variable font currently in development. With a range of axes that include weight, width, slant, optical size, and grade, this font allows the typography to respond  to use, screen size, light mode, and more without loading additional assets. This benefits user interface (UI) design, accessibility, long-form reading, and overall typographic design flexibility.</p> 
+</section>
+<section class="content-section" id="ui-design">
+  <hr />
+  <h2>UI design</h2>
+  <p>With mobile device usage over 50% in most markets, the ability to reflow and render well on any size of device is a critical aspect of any website design. Detecting a preference for “dark mode” color schemes adds yet another dimension to the design challenge, in addition to the myriad device sizes at which a site will be viewed. Variable fonts can be an integral part of responding to those challenges. </p>
+
+  <h3>Width</h3>
+  <p>The typography on this site is designed to scale font-size and line-height based on viewport width. Roboto Extremo is being used throughout for both headings and body copy. Thanks to the generous <a href="{{ site.baseurl }}/about-variable-fonts/#wdth">width axis</a>, headers are set narrower to allow for better line lengths with larger font sizes, while the body copy remains at a standard 100% width. This helps avoid awkward, choppy line breaks with large headers without compromising legibility.</p>
+
+  <h3>Grade</h3>
+    
+<pre class="css aside--right"><code class="prettyprint">
+  :root {
+    --p-vf-GRAD: 0;
+  }
+  p {
+    font-variation-settings: 'GRAD' var(--p-vf-GRAD);
+    letter-spacing: normal;
+  }
+  @media (prefers-color-scheme:dark) {
+    p {
+      --p-vf-GRAD: 0.35;
+      letter-spacing: 0.025em;
+    }
+  }
+</code></pre>
+     
+<p>The <a href="{{ site.baseurl }}/about-variable-fonts/#grad">grade axis</a> is really useful on the web when considering light modes and UI animation. Varying the weight of the text without altering the overall spacing, grades give us the ability to make fine adjustments for better legibility. They also facilitate additional kinds of animation on UI elements like buttons. Increasing or decreasing the visual weight of a text label based on focus state or user interaction gives us another powerful tool to guide users through a set of actions or flows. </p>
+
+<p>This site supports a “dark mode” that’s detected based on user device settings (when viewed in a browser that <a href="https://caniuse.com/#feat=prefers-color-scheme">supports the <code>prefers-color-scheme</code> media query</a>). When the contrast inverts in dark mode, the <span class="medium">grade</span> of the body text increases slightly, as does the <code>letter-spacing</code>. Since text can look a little thinner when shown light-on-dark, making the text a bit heavier and giving it more space increases legibility in that scenario. Being able to make these fine adjustments without loading additional files helps preserve the quality of the overall design and reading experience in ways never before possible on the web.</p>
+ 
+</section>
+
+<section class="content-section" id="accessibility">
+  <hr />
+  <h2>Accessibility</h2>
+  <p>Far from being a fad, supporting light/dark mode can be a huge boon for readers with any kind of light sensitivity or predisposition to migraines. In this sense, being able to support both modes of viewing the site is tremendously beneficial. The same principles can be put into practice in offering a higher-contrast mode. This helps address not only readers with low vision, but also those in lower-light environments. In both cases, increasing the weight or grade of text will improve legibility along a wider spectrum of light levels and vision acuity. Estimates range from 60% to as high as 75% of all adults require some sort of vision correction, so supporting this kind of functionality likely benefits far more visitors to a given website than the amount of attention paid to many other technical concerns. We’ve worked hard on this site to maintain appropriate contrast ratios in both light and dark modes of viewing.</p>
+</section>
+<section class="content-section" id="reading">
+  <hr />
+  <h2>Long-form reading</h2>
+  <p>One of the reasons reading online can be tiring or frustrating is poor typography. But what’s good on one device is not necessarily good on another. Screen size has always had a big impact on reading comfort, but until variable fonts came along, it was only possible to work with <code>font-size</code>, <code>line-height</code>, and line length (using <code>max-width</code>). While this is certainly helpful, it limits what can be accommodated.</p> 
+
+  <div class="aside aside--right" id="dynamic-typography">
+    <h4>Dynamic typography</h4>
+    <p>Modern CSS techniques at least allow us to do this more fluidly. This site was designed and developed using dynamic typography that leverages CSS custom properties and calculations to fluidly scale font-size and line-height along with the viewport. (<a href="https://rwt.io/typography-tips/digging-dynamic-typography">Read more about this on RWT.io</a>.) This in turn was inspired by CSS Locks as <a href="https://blog.typekit.com/2016/08/17/flexible-typography-with-css-locks/">written about by Tim Brown</a> and pioneered by <a href="https://www.madebymike.com.au/writing/fluid-type-calc-examples/">Mike Riethmuller</a>. You can also glimpse where some of these ideas in dynamic typography are going by reading <a href="https://css-tricks.com/simplified-fluid-typography/">this post on CSS-Tricks</a> and looking at projects like <a href="https://typetura.com/">Typetura</a> and <a href="https://textblock.io">Textblock</a>.</p>
+  </div>
+  
+  <p>Using the <a href="{{ site.baseurl }}/about-variable-fonts/#wght">weight axis</a> to make subtle adjustments to <code>font-weight</code> in body copy can help offset differences in text “color” on different screen sizes. Physically smaller screens can often make text of the same weight look thinner or less substantial. Likewise, the amount of “bold” required to get a reader’s attention may vary, too. Having the ability to subtly alter <code>font-weight</code> based on screen size can make for a smoother reading experience on a broader range of devices.</p> 
+  
+  <p>The advantage of the weight axis is that it allows us to have both medium and bold styles to provide different levels of emphasis without getting so heavy that the letters look closed up or muddy at text sizes. While defaults for normal and bold might be 400 and 700, here we use  350 for “normal” and about 650 for bold. (In truth, it’s set up as a multiplier of the body weight.)</p>
+  
+  <p>Headings can be another challenge. In trying to maintain a strong visual hierarchy, it can be tough to balance larger font sizes with shorter line lengths on smaller screens. Having the ability to balance <code>font-size</code>, <code>font-weight</code>, and <code>font-stretch</code> (width) lets designers achieve better design hierarchy and usability in more ways than ever before. The design of this site takes advantage of the broad range of the width axis in Roboto Extremo to set headings narrower, which helps increase the visual contrast between headings and body styles, and also achieves better line lengths on smaller screens.</p>
+  
+  <p><a href="{{ site.baseurl }}/about-variable-fonts/#opsz">Optical size</a> is yet another axis that can improve reading on screens. By adjusting stroke contrast, width, and apertures (the openings in letters like a <span class="medium">c</span> or <span class="medium">e</span>) based on <code>font-size</code>, this axis can help a single font work well for reading at small sizes and still showcase fine details at larger ones.</p>
+</section>  
+
+<section class="content-section" id="design">
+  <hr />
+  <h2>Design</h2>
+  <p>Typography is a huge component of our experience on the web, and having so many ways to make it more readable is really tremendous. In a sense, this kind of typography is supposed to be less noticed: to make the reading experience easier without getting in the way. But making the experience smoother is only one side of the equation. </p>
+
+  <p>Sometimes the goal is to get attention—to grab the reader, slow them down, and make them take notice. This is another way variable fonts can shine. Custom axes can bring unexpected flair, like <a href="{{ site.baseurl }}/about-variable-fonts/#casl">the “casual” axis in Recursive</a>, or allow for more dramatic typesetting like <a href="{{ site.baseurl }}/about-variable-fonts/#ytas_ytde">altering ascenders and descenders</a> to enable setting lines of type closer together for bolder headings. For this site, we’ve used a more exaggerated scale, making headings larger, lighter, and narrower, thus letting the type act as a visual element and not just a headline. </p>
+
+  <p>What’s more, since axes can be animated, we can add yet another technique to our design toolbox: motion! This lets us think about design on the web as more than just repurposed print design, but a dynamic combination of typographic techniques, changing content, and time. Subtle animation on load, tied to scrolling, or triggered by other kinds of user interaction, allows us to design typography with the sophistication of motion title graphics and the subtlety of the best publication design. Just don’t forget to design with “reduced motion” preference support in mind! (Learn more about motion design and inclusivity in this <a href="https://noti.st/valhead/xICaMq">presentation by Val Head</a>)</p>
+
+</section>
+<section class="content-section">
+  <hr />
+  <p>We hope you enjoy the site, and welcome your feedback, input, and ideas. If you’d like to provide any, head on over to <a href="https://github.com/googlefonts/variable-fonts">the Github repository</a>. There you’ll be able check out the code, see what’s being discussed in the issues, and create your own if you’d like to participate.</p>
