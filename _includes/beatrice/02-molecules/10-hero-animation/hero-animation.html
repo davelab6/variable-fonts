@@ -4,30 +4,104 @@
   {% assign text = 'Variable Typography' %}
 {% endif %}
 
-<div class="hero-animation pause" id="hero_animation">
-  <h1 class="hero-animation__text">{{ text }}</h1>
-  <div class="hero-animation__controls">
-    <button id="play_pause" name="play-pause" class="mdc-button mdc-button--raised play-pause pause"><i class="material-icons mdc-button__icon" aria-hidden="true">pause</i> Click to </button>
-    <div id='demo-controls' class="controls">
-      {% include beatrice/02-molecules/09-slider-group/slider-group.html 
-        style = 'wide'
-        keyword = 'wght'
-        id = 'hero-text-vf-wght'
-        min = '100'
-        max = '1000'
-        now = '150'
-        step = '1'
-      %}
-      {% include beatrice/02-molecules/09-slider-group/slider-group.html 
-        style = 'wide'
-        keyword = 'CASL'
-        id = 'hero-text-vf-CASL'
-        min = '0'
-        max = '1'
-        now = '0'
-        step = '0.01'
-      %}
+{% capture fvsMinValues %}
+  {% for axis in include.axes %}
+    {% capture variableName %}--text-vf-{{ axis.name }}-min{% endcapture %}
+    "{{ axis.name }}" var({{ variableName }})
+    {% if forloop.last %};{% else %},{% endif %}
+  {% endfor %}
+{% endcapture %}
+
+{% capture cssAnimation %}
+.hero-animation {
+  {% for axis in include.axes %}
+    --text-vf-{{ axis.name }}-min: {{ axis.default | default: axis.min }};
+    --text-vf-{{ axis.name }}-max: {{ axis.default | default: axis.max }};
+  {% endfor %}
+  
+  /* debug: color: green; */
+  font-variation-settings: {{ fvsMinValues }};
+
+}
+
+@keyframes breath {
+  0% {
+    /* debug: color: blue; */
+    font-variation-settings: {{ fvsMinValues }};
+  }
+
+  100% {
+    /* debug: color: orange; */
+    font-variation-settings:
+      {% for axis in include.axes %}
+        {% capture variableName %}--text-vf-{{ axis.name }}-max{% endcapture %}
+        "{{ axis.name }}" var({{ variableName }})
+        {% if forloop.last %};{% else %},{% endif %}
+      {% endfor %}
+  }
+{% endcapture %}
+
+<div class="js-hero hero hero--paused"
+      {% comment %} data-all-active="true" {% endcomment %}
+      {% for axis in include.axes %}
+        data-{{ axis.name }}-active="false"
+      {% endfor %}>
+  <div class="hero-sidebar">
+    <div class="hero-sidebar-icon">
+      <img src="{{ site.baseurl }}/assets/img/hero-folder.svg" alt="" role="presentation" />
     </div>
-    
+    <div class="hero-sidebar-items js-hero-buttons">
+      {% for axis in include.axes %}
+        {% capture optionId %}{{ axis.name }}_{{ forloop.index }}{% endcapture %}
+        <div class="hero-sidebar-item">
+          <button id="{{ optionId }}"
+                  data-axis="{{ axis.name }}"
+                  data-label="{{ axis.label }}"
+                  data-active="false"
+                  class="js-hero-button hero-button">{{ axis.label }}</button>
+        </div>
+      {% endfor %}
+    </div>
   </div>
+  {% comment %}
+  <button
+    data-axis="all"
+    data-label="All"
+    data-active="true"
+    class="js-hero-button hero-button hero-button--active"
+  >
+    All
+  </button>
+  {% endcomment %}
+  <div class="hero-main">
+    <div class="hero-animation mdc-card pause" id="hero_animation">
+      <div class="range__axis__label">
+        <p>{{ include.fontFamilyName | default: "Recursive" }}</p>
+      </div>
+      <div class="hero-animation-frame">
+        <h1 class="hero-animation-text js-hero-animation-text">{{ text }}</h1>
+      </div>
+    </div>
+    <div class="js-hero-controls hero-animation__controls">
+      {% for axis in include.axes %}
+        <label><strong>{{ axis.label }}</strong>
+          {% include beatrice/01-atoms/02-forms/slider/md-slider.html
+                     axis=axis.name
+                     min=axis.min
+                     max=axis.max 
+                     step=axis.step %}
+        </label>
+      {% endfor %}
+    </div>
+    <button id="play_pause" name="play-pause" class="mdc-button mdc-button--raised play-pause pause"><i class="material-icons mdc-button__icon" aria-hidden="true">pause</i> Click to </button>
+  </div>
+  {% comment %}
+    <!-- If you need to debug the CSS in the style block: -->
+    <pre>
+      {{ cssAnimation }}
+    </pre>
+  {% endcomment %}
+  <style class="js-hero-style">
+    {{ cssAnimation }}
+  </style>
 </div>

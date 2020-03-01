@@ -1,4 +1,5 @@
 .content-section {
+  clear: both;
   padding-left: 1vw;
   padding-right: 1vw;
   @include section-width();
@@ -77,4 +78,8 @@
   &.custom > h2::before {
     content: "Custom Axis";
   }
+}
+
+.padded-bottom {
+  padding-bottom: calc( var(--body-text-spacer) * 1 );
 }
